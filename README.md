@@ -1,52 +1,189 @@
-# Arcprocurement Frontend
+# ARC Procurement Frontend
 
-![ARC](https://img.shields.io/badge/Organization-ARC-green)
-![Status](https://img.shields.io/badge/Status-Production-success)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+<p align="center">
+  <img src="docs/images/arc-logo.png" width="180">
+</p>
 
-## Overview
-Enterprise-ready ARC repository documentation.
+<p align="center">
 
-## Architecture Diagram
-```text
-Frontend -> API -> Auth Service -> Database
+![Status](https://img.shields.io/badge/status-Production-success)
+![Version](https://img.shields.io/badge/version-1.5.0-blue)
+![Angular](https://img.shields.io/badge/Angular-18-red)
+![Ionic](https://img.shields.io/badge/Ionic-8-blue)
+![License](https://img.shields.io/badge/license-ARC-lightgrey)
+
+</p>
+
+---
+
+# Overview
+
+The **ARC Procurement Frontend** is a responsive web application providing procurement staff, managers, and finance personnel with a modern interface for managing procurement activities.
+
+## Features
+
+- Dashboard
+- Requisition Management
+- Supplier Directory
+- Approval Workflow
+- Purchase Orders
+- Reporting Dashboard
+- Responsive Design
+- Authentication Integration
+- Role-Based Navigation
+
+---
+
+# Screenshots
+
+```
+docs/images/
+
+dashboard.png
+
+requisition.png
+
+approvals.png
+
+reports.png
+
+suppliers.png
 ```
 
-## Screenshots
-Place screenshots under `/docs/images/`.
+---
 
-## Technology Stack
-- Angular/Ionic
+# Architecture
 
-## Environment Variables
-```env
-APP_PORT=3000
-DB_HOST=localhost
-JWT_SECRET=change_me
+```mermaid
+flowchart LR
+
+Browser --> Angular
+
+Angular --> Authentication
+
+Angular --> ProcurementAPI
+
+ProcurementAPI --> PostgreSQL
 ```
 
-## Docker Deployment
+---
+
+# Technology Stack
+
+| Layer | Technology |
+|---------|------------|
+| Frontend | Angular 18 |
+| UI | Ionic 8 |
+| Styling | SCSS |
+| Charts | Chart.js |
+| Authentication | JWT |
+| Maps | Leaflet (optional) |
+
+---
+
+# Installation
+
 ```bash
-docker build -t arcprocurement-frontend .
-docker run -d arcprocurement-frontend
+git clone https://github.com/ARC/arcprocurement-frontend
+
+cd arcprocurement-frontend
+
+npm install
+
+ionic serve
 ```
 
-## PM2 Deployment
+---
+
+# Configuration
+
+```typescript
+apiUrl=http://localhost:3000
+
+authUrl=http://localhost:3001
+```
+
+---
+
+# Folder Structure
+
+```
+src/
+
+app/
+
+components/
+
+pages/
+
+services/
+
+guards/
+
+assets/
+
+theme/
+
+environments/
+```
+
+---
+
+# Authentication
+
+- JWT Login
+- Route Guards
+- Role-Based Menus
+- Session Timeout
+- Token Refresh
+
+---
+
+# Reporting
+
+- Procurement Status
+- Department Spending
+- Supplier Statistics
+- Purchase Orders
+- Approval Performance
+
+---
+
+# Deployment
+
 ```bash
-pm install -g pm2
-pm2 start ecosystem.config.js
+ionic build
+
+pm2 serve www 8100
 ```
 
-## API Documentation
-Swagger/OpenAPI: `/api/docs`
+---
 
-## Release History
-| Version | Notes |
-|----------|-------|
-| 1.0.0 | Initial Release |
+# Security
 
-## Support
-Agricultural Research Council (ARC) ICT
+- Route Guards
+- HTTPS
+- JWT Storage
+- Secure API Calls
 
-## License
-Copyright © Agricultural Research Council (ARC). All Rights Reserved.
+---
+
+# Documentation
+
+```
+docs/
+
+user-guide.md
+
+deployment.md
+
+screenshots/
+```
+
+---
+
+# License
+
+Copyright © Agricultural Research Council (ARC)
+
+All Rights Reserved.
