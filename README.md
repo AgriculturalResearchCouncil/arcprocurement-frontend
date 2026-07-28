@@ -1,189 +1,113 @@
-# ARC Procurement Frontend
+# ARC Procurement System Frontend
 
-<p align="center">
-  <img src="docs/images/arc-logo.png" width="180">
-</p>
+![Status](https://img.shields.io/badge/status-active%20development-brightgreen)
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Stack](https://img.shields.io/badge/tech-Angular%20%2F%20Ionic%20%2F%20Capacitor-lightgrey)
+![License](https://img.shields.io/badge/license-ISC-orange)
 
-<p align="center">
+## Overview
 
-![Status](https://img.shields.io/badge/status-Production-success)
-![Version](https://img.shields.io/badge/version-1.5.0-blue)
-![Angular](https://img.shields.io/badge/Angular-18-red)
-![Ionic](https://img.shields.io/badge/Ionic-8-blue)
-![License](https://img.shields.io/badge/license-ARC-lightgrey)
+The frontend for the ARC Procurement Tracking System is an Angular and Ionic web application designed for ARC users to monitor, update, and manage procurement records through a responsive enterprise interface. It connects to the backend API for authentication, procurement workflows, reporting, and import/export operations.
 
-</p>
+## What the User Sees
 
----
+The application provides a practical operating view for procurement administration:
 
-# Overview
+- A secure login experience using ARC Active Directory credentials.
+- A dashboard with procurement totals, status summaries, overdue alerts, and chart-based reporting.
+- A procurement management screen for filtered searches, pagination, assignment of responsible users, comments, and record navigation.
+- A procurement detail view for editing milestone dates, updating workflow status, exporting a procurement record, and reviewing audit history.
+- An import/export workspace for manual procurement entry, bulk Excel import, template download, and export actions.
+- A reporting page for status, campus, and monthly trend analytics.
+- An administrator-only user management page for creating and maintaining ARC users and roles.
 
-The **ARC Procurement Frontend** is a responsive web application providing procurement staff, managers, and finance personnel with a modern interface for managing procurement activities.
+## Main Pages and Routes
 
-## Features
+- `/login` — authentication entry page
+- `/dashboard` — summary and operational overview
+- `/procurements` — procurement list and filters
+- `/procurements/:id` — procurement detail and workflow updates
+- `/import-export` — bulk entry, Excel import, template download, and export
+- `/reports` — dashboards and analytics views
+- `/users` — user administration for administrators
 
-- Dashboard
-- Requisition Management
-- Supplier Directory
-- Approval Workflow
-- Purchase Orders
-- Reporting Dashboard
-- Responsive Design
-- Authentication Integration
-- Role-Based Navigation
-
----
-
-# Screenshots
-
-```
-docs/images/
-
-dashboard.png
-
-requisition.png
-
-approvals.png
-
-reports.png
-
-suppliers.png
-```
-
----
-
-# Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
-
-Browser --> Angular
-
-Angular --> Authentication
-
-Angular --> ProcurementAPI
-
-ProcurementAPI --> PostgreSQL
+    A[User] --> B[Angular/Ionic UI]
+    B --> C[Auth Guard]
+    B --> D[Procurement Pages]
+    B --> E[Import/Export Pages]
+    B --> F[Reports Pages]
+    B --> G[Backend API]
+    G --> H[MySQL Database]
 ```
 
----
+## Technology Stack
 
-# Technology Stack
+- Angular 20
+- Ionic Framework
+- Capacitor
+- RxJS
+- Chart.js for reporting visuals
+- TypeScript
 
-| Layer | Technology |
-|---------|------------|
-| Frontend | Angular 18 |
-| UI | Ionic 8 |
-| Styling | SCSS |
-| Charts | Chart.js |
-| Authentication | JWT |
-| Maps | Leaflet (optional) |
-
----
-
-# Installation
+## Installation
 
 ```bash
-git clone https://github.com/ARC/arcprocurement-frontend
-
-cd arcprocurement-frontend
-
+cd frontend
 npm install
-
-ionic serve
 ```
 
----
+## Environment Configuration
 
-# Configuration
+The app reads its API endpoint from [frontend/src/environments/environment.ts](src/environments/environment.ts):
 
-```typescript
-apiUrl=http://localhost:3000
+- `apiUrl: http://localhost:3001/api`
+- `appName: ARC Procurement Tracking System`
 
-authUrl=http://localhost:3001
-```
+## Local Development
 
----
-
-# Folder Structure
-
-```
-src/
-
-app/
-
-components/
-
-pages/
-
-services/
-
-guards/
-
-assets/
-
-theme/
-
-environments/
-```
-
----
-
-# Authentication
-
-- JWT Login
-- Route Guards
-- Role-Based Menus
-- Session Timeout
-- Token Refresh
-
----
-
-# Reporting
-
-- Procurement Status
-- Department Spending
-- Supplier Statistics
-- Purchase Orders
-- Approval Performance
-
----
-
-# Deployment
+1. Start the backend API first.
+2. Launch the frontend:
 
 ```bash
-ionic build
-
-pm2 serve www 8100
+npm start
 ```
 
----
+The development server will run the Angular application locally, typically on the default Angular development port.
 
-# Security
+## Authentication Flow
 
-- Route Guards
-- HTTPS
-- JWT Storage
-- Secure API Calls
+The frontend uses the `AuthService` to store the JWT token and current user in local storage. Route access is protected by `AuthGuard` and role-based access is enforced by `RoleGuard` for restricted areas such as import/export and user management.
 
----
+## UI Capabilities
 
-# Documentation
+- Responsive Ionic layout for desktop and tablet usage
+- Toast notifications for success and error feedback
+- Role-based menu items and action visibility
+- Form-driven procurement entry and status updates
+- Charts for procurement status, campus distribution, and trends
 
+## Build and Packaging
+
+The project includes Angular and Capacitor tooling, so it can be served as a web application and extended for mobile packaging when required.
+
+```bash
+npm run build
 ```
-docs/
 
-user-guide.md
+## Security
 
-deployment.md
+- Token-based session management through the backend JWT flow
+- Protected routes for authenticated and role-restricted screens
+- No direct storage of user passwords in the frontend; authentication is delegated to the API
 
-screenshots/
-```
+## Support
 
----
+For frontend issues, UI defects, route problems, or deployment concerns, confirm the active backend endpoint and the current environment configuration before making changes.
 
-# License
+## Licensing
 
-Copyright © Agricultural Research Council (ARC)
-
-All Rights Reserved.
+This frontend component is distributed under the ISC license as defined in the project package metadata.
