@@ -1,3 +1,55 @@
+<app-sidebar></app-sidebar>
+
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-header>
+    <ion-toolbar color="primary" class="header-toolbar">
+      <ion-buttons slot="start">
+        <!-- Menu button links to sidebar -->
+        <ion-menu-button *ngIf="isAuthenticated" menu="main-menu" class="menu-btn"></ion-menu-button>
+        <ion-button *ngIf="!isAuthenticated" routerLink="/login" fill="clear" class="home-btn">
+          <ion-icon name="log-in-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      
+      <!-- Centered Logo and Text -->
+<div class="centered-logo-container">
+  <div class="logo-wrapper-modern">
+    <div class="logo-icon-wrapper">
+      <img src="assets/images/arc_logo_small.png" alt="ARC Logo" class="arc-logo-modern" />
+    </div>
+    <div class="logo-text-modern">
+      <span class="logo-main-text">Procurement Tracking System</span>
+      <span class="logo-subtitle">Version: {{ version }}</span>
+    </div>
+  </div>
+</div>
+      
+      <ion-buttons slot="end">
+        <!-- Show for unauthenticated users -->
+        <ng-container *ngIf="!isAuthenticated">
+          <ion-button routerLink="/login" fill="clear" class="nav-link">
+            Sign In
+          </ion-button>
+        </ng-container>
+        
+        <!-- Show for authenticated users -->
+        <ng-container *ngIf="isAuthenticated">
+          <ion-button routerLink="/dashboard" fill="clear" class="nav-link">
+            <ion-icon name="speedometer-outline" slot="start"></ion-icon>
+            Dashboard
+          </ion-button>
+          <ion-button (click)="logout()" fill="clear" class="logout-btn-header">
+            <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ng-container>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- This wrapper ensures all routed pages get proper padding -->
+  <div class="page-content">
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </div>
+  
+  <app-footer></app-footer>
 </ion-app>

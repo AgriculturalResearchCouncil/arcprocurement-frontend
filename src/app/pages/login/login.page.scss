@@ -1,0 +1,376 @@
+// frontend/src/app/pages/login/login.page.scss
+
+.login-container {
+  --background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 20px;
+  width: 100%;
+}
+
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arc-logo {
+  width: 100px;
+  height: 100px;
+  background-image: url('/assets/images/arc_logo_small.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.brand-section h1 {
+  font-size: 24px;
+  color: #361414;
+  margin: 0;
+  font-weight: 600;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #361414;
+  margin-bottom: 8px;
+}
+
+.input-label ion-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+.native-input-field {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  background: white;
+  color: #2c3e50;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.native-input-field:focus {
+  outline: none;
+  border-color: #005D28;
+  box-shadow: 0 0 0 2px rgba(0, 93, 40, 0.1);
+}
+
+.native-input-field::placeholder {
+  color: #a0aec0;
+}
+
+.native-input-field.error {
+  border-color: #c33;
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(204, 51, 51, 0.1);
+  }
+}
+
+.input-hint {
+  display: block;
+  font-size: 11px;
+  color: #a0aec0;
+  margin-top: 6px;
+}
+
+// Enhanced Error Container - Matching your design system
+.error-container {
+  background: #fee;
+  border-radius: 8px;
+  margin: 16px 0;
+  overflow: hidden;
+  animation: slideDown 0.3s ease-out;
+  border-left: 3px solid #c33;
+  
+  &.error-danger {
+    background: #fee;
+    border-left-color: #c33;
+  }
+  
+  &.error-warning {
+    background: #fff3e0;
+    border-left-color: #ed6c02;
+  }
+  
+  &.error-info {
+    background: #e8f0fe;
+    border-left-color: #005D28;
+  }
+  
+  .error-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 12px 8px 12px;
+    gap: 8px;
+    
+    .error-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    
+    &.error-danger .error-icon {
+      color: #c33;
+    }
+    
+    &.error-warning .error-icon {
+      color: #ed6c02;
+    }
+    
+    &.error-info .error-icon {
+      color: #005D28;
+    }
+    
+    .error-title {
+      flex: 1;
+      font-weight: 600;
+      font-size: 14px;
+      color: #361414;
+    }
+    
+    .close-error {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #999;
+      padding: 0 4px;
+      transition: color 0.2s;
+      
+      &:hover {
+        color: #361414;
+      }
+    }
+  }
+  
+  .error-message {
+    padding: 0 12px 12px 12px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+  }
+  
+  .error-actions {
+    padding: 0 12px 12px 12px;
+    
+    .error-action-btn {
+      background: white;
+      border: 1px solid #e0e6ed;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #361414;
+      transition: all 0.2s;
+      
+      ion-icon {
+        font-size: 14px;
+      }
+      
+      &:hover {
+        background: #f8f9fa;
+        border-color: #005D28;
+      }
+    }
+  }
+  
+  .error-help {
+    padding: 8px 12px 10px 12px;
+    font-size: 11px;
+    color: #888;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 4px;
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+// Keep your original error-message style for backward compatibility
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-message ion-icon {
+  font-size: 20px;
+}
+
+.login-button {
+  margin-top: 24px;
+  --border-radius: 8px;
+  --background: #005D28;
+  --background-hover: #004a20;
+  font-weight: 600;
+  height: 48px;
+  --box-shadow: none;
+}
+
+.login-button ion-icon {
+  margin-right: 8px;
+}
+
+.demo-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e6ed;
+}
+
+.demo-section h3 {
+  font-size: 14px;
+  color: #361414;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.login-instruction {
+  font-size: 13px;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.demo-info {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.demo-info p {
+  margin: 4px 0;
+  color: #495057;
+}
+
+.demo-info strong {
+  color: #361414;
+}
+
+.info-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+// New info section for error help text
+.info-section {
+  margin-top: 20px;
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #6c757d;
+    
+    ion-icon {
+      font-size: 14px;
+      color: #005D28;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 24px;
+  }
+  
+  .brand-section h1 {
+    font-size: 20px;
+  }
+  
+  .arc-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .native-input-field {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .error-container {
+    .error-header {
+      padding: 10px 12px 6px 12px;
+      
+      .error-icon {
+        font-size: 18px;
+      }
+      
+      .error-title {
+        font-size: 13px;
+      }
+    }
+    
+    .error-message {
+      padding: 0 12px 10px 12px;
+      font-size: 12px;
+    }
+  }
+}

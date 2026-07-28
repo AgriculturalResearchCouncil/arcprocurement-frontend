@@ -1,0 +1,342 @@
+<ion-content>
+  <div class="detail-container" *ngIf="!isLoading && procurement">
+    <!-- Header -->
+    <div class="page-header">
+      <div>
+        <div class="breadcrumb">
+          <a routerLink="/procurements">Procurements</a>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+          <span>{{procurement.proc_number}}</span>
+        </div>
+        <h1>{{procurement.project_description | slice:0:100}}</h1>
+        <div class="status-row">
+          <span class="status-badge" [ngClass]="getStatusClass(procurement.overall_status)">
+            {{procurement.overall_status | titlecase}}
+          </span>
+          <span class="created-date">Created: {{formatDateTime(procurement.created_at)}}</span>
+          <span class="source-badge" [class.excel]="procurement.source === 'excel_import'">
+            {{procurement.source === 'excel_import' ? 'Imported from Excel' : 'Manually Created'}}
+          </span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <ion-button *ngIf="canEdit() && !isEditing" (click)="toggleEdit()" fill="outline">
+          <ion-icon slot="start" name="create-outline"></ion-icon>
+          Edit
+        </ion-button>
+        <ion-button *ngIf="canDelete()" (click)="deleteProcurement()" color="danger" fill="outline">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Delete
+        </ion-button>
+        <ion-button (click)="exportProcurement()" fill="outline">
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Export
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button [class.active]="activeTab === 'details'" (click)="setActiveTab('details')">
+        Details
+      </button>
+      <button [class.active]="activeTab === 'status'" (click)="setActiveTab('status')">
+        Update Status
+      </button>
+      <button [class.active]="activeTab === 'audit'" (click)="setActiveTab('audit')">
+        Audit Trail
+      </button>
+    </div>
+
+    <!-- Details Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'details'">
+      <div class="details-grid">
+        <!-- Basic Information -->
+        <div class="detail-card">
+          <h3>Basic Information</h3>
+          <div class="detail-row">
+            <span class="label">Procurement Number:</span>
+            <span *ngIf="!isEditing">{{procurement.proc_number}}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="procurement.proc_number" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Project Description:</span>
+            <span *ngIf="!isEditing">{{procurement.project_description}}</span>
+            <textarea *ngIf="isEditing" [(ngModel)]="procurement.project_description" rows="3" class="native-textarea-field"></textarea>
+          </div>
+          <div class="detail-row">
+            <span class="label">Programme:</span>
+            <span *ngIf="!isEditing">{{procurement.programme || '-'}}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="procurement.programme" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Business Unit:</span>
+            <span *ngIf="!isEditing">{{procurement.business_unit || '-'}}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="procurement.business_unit" class="native-input-field">
+          </div>
+        </div>
+
+        <!-- Campus & Value -->
+        <div class="detail-card">
+          <h3>Campus & Value</h3>
+          <div class="detail-row">
+            <span class="label">Campus:</span>
+            <span *ngIf="!isEditing">{{getCampusDisplayName()}}</span>
+            <select *ngIf="isEditing" [(ngModel)]="procurement.campus_id" class="native-select-field">
+              <option *ngFor="let campus of campuses" [value]="campus.id">
+                {{campus.name}}
+              </option>
+            </select>
+          </div>
+          <div class="detail-row">
+            <span class="label">Institute:</span>
+            <span *ngIf="!isEditing">{{procurement.name_of_institute || '-'}}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="procurement.name_of_institute" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Estimated Value:</span>
+            <span *ngIf="!isEditing">{{formatCurrency(procurement.estimated_value!)}}</span>
+            <input *ngIf="isEditing" type="number" [(ngModel)]="procurement.estimated_value" class="native-input-field" step="0.01">
+          </div>
+          <div class="detail-row">
+            <span class="label">Method of Procurement:</span>
+            <span *ngIf="!isEditing">{{procurement.method_of_procurement || '-'}}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="procurement.method_of_procurement" class="native-input-field">
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="detail-card">
+          <h3>Important Dates</h3>
+          <div class="detail-row">
+            <span class="label">Bid Specification:</span>
+            <span *ngIf="!isEditing">{{formatDate(procurement.bid_specification) || '-'}}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="procurement.bid_specification" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Advert Date:</span>
+            <span *ngIf="!isEditing">{{formatDate(procurement.advert) || '-'}}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="procurement.advert" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Bid Closing Date:</span>
+            <span *ngIf="!isEditing">{{formatDate(procurement.bid_closing) || '-'}}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="procurement.bid_closing" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Bid Evaluation Date:</span>
+            <span *ngIf="!isEditing">{{formatDate(procurement.bid_evaluation) || '-'}}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="procurement.bid_evaluation" class="native-input-field">
+          </div>
+          <div class="detail-row">
+            <span class="label">Bid Award Date:</span>
+            <span *ngIf="!isEditing">{{formatDate(procurement.bid_award) || '-'}}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="procurement.bid_award" class="native-input-field">
+          </div>
+        </div>
+
+        <!-- Assignment -->
+        <div class="detail-card">
+          <h3>Assignment</h3>
+          <div class="detail-row">
+            <span class="label">Responsible User:</span>
+            <span *ngIf="!isEditing">{{procurement.responsible_user_name || 'Unassigned'}}</span>
+            
+            <div *ngIf="isEditing" class="assignment-control">
+              <!-- Loading indicator -->
+              <div *ngIf="isLoadingUsers" class="loading-users">
+                <ion-spinner name="dots"></ion-spinner>
+                <span>Loading users...</span>
+              </div>
+              
+              <!-- User dropdown -->
+              <select 
+                *ngIf="!isLoadingUsers"
+                [(ngModel)]="selectedResponsibleUserId" 
+                class="native-select-field">
+                <option [ngValue]="null">-- Select Responsible User --</option>
+                <option *ngFor="let user of responsibleUsers" [ngValue]="user.id">
+                  {{user.name}} ({{user.email}})
+                  <!-- {{user.name}} ({{user.username}}) -->
+                  <span *ngIf="user.is_from_ad" class="ad-badge">AD</span>
+                </option>
+              </select>
+              
+              <!-- Action buttons -->
+              <!-- <div class="assignment-buttons">
+                <ion-button 
+                  (click)="showUserSearch = !showUserSearch" 
+                  size="small" 
+                  fill="clear"
+                  type="button">
+                  <ion-icon name="search-outline"></ion-icon>
+                  Search AD
+                </ion-button>
+                
+                <ion-button 
+                  *ngIf="authService.hasRole(['admin'])"
+                  (click)="syncADUsers()" 
+                  size="small" 
+                  fill="clear"
+                  type="button">
+                  <ion-icon name="sync-outline"></ion-icon>
+                  Sync AD
+                </ion-button> 
+              </div>-->
+              
+              <!-- AD Search Panel -->
+              <div *ngIf="showUserSearch" class="ad-search-panel">
+                <div class="search-input-group">
+                  <input 
+                    type="text" 
+                    [(ngModel)]="userSearchTerm" 
+                    placeholder="Search Active Directory (name, username, email)..."
+                    class="native-input-field"
+                    (keyup.enter)="searchADUsers()">
+                  <ion-button 
+                    (click)="searchADUsers()" 
+                    size="small" 
+                    [disabled]="isSearchingUsers">
+                    {{isSearchingUsers ? 'Searching...' : 'Search'}}
+                  </ion-button>
+                </div>
+                <small class="search-hint">Enter at least 2 characters to search Active Directory</small>
+              </div>
+              
+              <!-- Assign button -->
+              <ion-button 
+                *ngIf="selectedResponsibleUserId !== procurement.responsible_user_id && selectedResponsibleUserId" 
+                (click)="assignResponsibleUser()" 
+                size="small" 
+                fill="solid"
+                [disabled]="isUpdating">
+                {{isUpdating ? 'Assigning...' : 'Assign User'}}
+              </ion-button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="detail-card full-width">
+          <h3>Comments</h3>
+          <div class="comments-section">
+            <div *ngIf="procurement.comments" class="comments-display">
+              <pre>{{procurement.comments}}</pre>
+            </div>
+            <div *ngIf="!procurement.comments" class="no-comments">
+              No comments yet
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Actions -->
+      <div *ngIf="isEditing" class="edit-actions">
+        <ion-button (click)="cancelEdit()" fill="outline">Cancel</ion-button>
+        <ion-button (click)="saveChanges()" [disabled]="isUpdating">
+          {{isUpdating ? 'Saving...' : 'Save Changes'}}
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Status Update Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'status' && procurement">
+      <div class="status-card">
+        <h3>Update Procurement Status</h3>
+        <p class="status-help">Update any of the date fields below to automatically recalculate the overall status.</p>
+        
+        <div class="status-form">
+          <div class="form-group">
+            <label class="form-label">Select Date Field</label>
+            <select [(ngModel)]="selectedDateField" class="native-select-field">
+              <option *ngFor="let field of dateFields" [value]="field.value">
+                {{field.label}}
+              </option>
+            </select>
+          </div>
+          
+          <div class="form-group" *ngIf="selectedDateField">
+            <label class="form-label">Date Value</label>
+            <input type="date" [(ngModel)]="selectedDateValue" class="native-input-field">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Comment (Optional)</label>
+            <textarea [(ngModel)]="statusComment" rows="3" placeholder="Add a comment about this update..." class="native-textarea-field"></textarea>
+          </div>
+          
+          <ion-button expand="block" (click)="updateStatus()" [disabled]="!selectedDateField || isUpdating">
+            {{isUpdating ? 'Updating...' : 'Update Status'}}
+          </ion-button>
+        </div>
+        
+        <div class="status-info">
+          <h4>Current Status Breakdown:</h4>
+          <div class="status-checks">
+            <div class="status-check" [class.completed]="procurement.status_advertised">
+              <ion-icon [name]="procurement.status_advertised ? 'checkmark-circle-outline' : 'ellipse-outline'"></ion-icon>
+              Advertised: {{procurement.status_advertised ? 'Completed' : 'Pending'}}
+            </div>
+            <div class="status-check" [class.completed]="procurement.status_evaluated">
+              <ion-icon [name]="procurement.status_evaluated ? 'checkmark-circle-outline' : 'ellipse-outline'"></ion-icon>
+              Evaluated: {{procurement.status_evaluated ? 'Completed' : 'Pending'}}
+            </div>
+            <div class="status-check" [class.completed]="procurement.status_awarded">
+              <ion-icon [name]="procurement.status_awarded ? 'checkmark-circle-outline' : 'ellipse-outline'"></ion-icon>
+              Awarded: {{procurement.status_awarded ? 'Completed' : 'Pending'}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Trail Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'audit' && procurement">
+      <div class="audit-card">
+        <h3>Audit Trail</h3>
+        <div class="timeline">
+          <div *ngFor="let log of procurement.logs" class="timeline-item">
+            <div class="timeline-badge">
+              <ion-icon name="git-commit-outline"></ion-icon>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <strong>{{log.user_name}}</strong>
+                <span class="timeline-date">{{formatDateTime(log.created_at)}}</span>
+              </div>
+              <div class="timeline-body">
+                <div class="change-detail">
+                  <span class="field">Field:</span> {{log.field_changed}}
+                </div>
+                <div class="change-detail">
+                  <span class="field">Changed from:</span> {{log.old_value || '(empty)'}}
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                  {{log.new_value || '(empty)'}}
+                </div>
+                <div *ngIf="log.comment" class="change-comment">
+                  <span class="field">Comment:</span> {{log.comment}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!procurement.logs?.length" class="no-logs">
+            No audit trail records found
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading procurement details...</p>
+  </div>
+  
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !procurement" class="error-container">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <p>Failed to load procurement details</p>
+    <ion-button (click)="loadProcurement()">Retry</ion-button>
+  </div>
+</ion-content>

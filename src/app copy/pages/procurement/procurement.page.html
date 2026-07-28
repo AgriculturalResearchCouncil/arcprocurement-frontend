@@ -1,0 +1,249 @@
+<ion-content>
+  <div class="procurement-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>&nbsp;</h1>
+        <p>Manage and track all procurement activities</p>
+      </div>
+      <ion-button routerLink="/procurements/new" color="primary">
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        New Procurement
+      </ion-button>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-card">
+      <div class="filters-header">
+        <ion-icon name="funnel-outline"></ion-icon>
+        <span>Filters</span>
+      </div>
+      
+      <div class="filters-grid">
+        <div class="filter-group">
+          <ion-label>Search</ion-label>
+          <ion-input 
+            placeholder="Search by number or description..."
+            [(ngModel)]="filters.search"
+            (ionInput)="onSearchChange($event)">
+            <ion-icon slot="start" name="search-outline"></ion-icon>
+          </ion-input>
+        </div>
+        
+        <div class="filter-group">
+          <ion-label>Campus</ion-label>
+          <ion-select 
+            [(ngModel)]="filters.campus_id" 
+            (ionChange)="applyFilters()"
+            placeholder="All Campuses">
+            <ion-select-option [value]="undefined">All Campuses</ion-select-option>
+            <ion-select-option *ngFor="let campus of campuses" [value]="campus.id">
+              {{campus.name}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        
+        <div class="filter-group">
+          <ion-label>Status</ion-label>
+          <ion-select 
+            [(ngModel)]="filters.status" 
+            (ionChange)="applyFilters()"
+            placeholder="All Statuses">
+            <ion-select-option *ngFor="let option of statusOptions" [value]="option.value">
+              {{option.label}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        
+        <div class="filter-group">
+          <ion-label>Sort By</ion-label>
+          <ion-select 
+            [(ngModel)]="filters.sort_by" 
+            (ionChange)="changeSort()">
+            <ion-select-option *ngFor="let option of sortOptions" [value]="option.value">
+              {{option.label}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        
+        <div class="filter-group filter-actions">
+          <ion-button fill="outline" (click)="resetFilters()">
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            Reset
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading procurements...</p>
+    </div>
+
+    <!-- Procurements Table -->
+    <div *ngIf="!isLoading" class="table-container">
+      <div class="table-header">
+        <div class="sort-info">
+          <ion-icon name="swap-vertical-outline" (click)="toggleSortOrder()"></ion-icon>
+          <span>Sort: {{filters.sort_by | titlecase}} ({{filters.sort_order === 'desc' ? 'Descending' : 'Ascending'}})</span>
+        </div>
+        <div class="record-count">Showing {{procurements.length}} of {{totalItems}} records</div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Project Description</th>
+              <th>Programme</th>
+              <th>Campus</th>
+              <th>Responsible</th>
+              <th>Advert Date</th>
+              <th>Evaluation Date</th>
+              <th>Award Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+             </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let procurement of procurements">
+              <td class="proc-number">{{procurement.proc_number}}</td>
+              <td class="description">
+                <div class="desc-text">{{procurement.project_description | slice:0:60}}</div>
+                <div *ngIf="procurement.comments" class="has-comments">
+                  <ion-icon name="chatbubble-outline" size="small"></ion-icon>
+                  <span>Has comments</span>
+                </div>
+              </td>
+              <td>{{procurement.programme || '-'}}</td>
+              <td>{{procurement.campus_name || '-'}}</td>
+              <td>
+                <div class="responsible-cell">
+                  <span>{{procurement.responsible_user_name || 'Unassigned'}}</span>
+                  <ion-button 
+                    *ngIf="authService.hasRole(['admin', 'campus_manager'])"
+                    fill="clear" 
+                    size="small"
+                    (click)="openAssignModal(procurement)">
+                    <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </td>
+              <td>{{formatDate(procurement.advert)}}</td>
+              <td>{{formatDate(procurement.bid_evaluation)}}</td>
+              <td>{{formatDate(procurement.bid_award)}}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(procurement.overall_status)">
+                  {{procurement.overall_status | titlecase}}
+                </span>
+              </td>
+              <td class="actions-cell">
+                <div class="action-buttons">
+                  <ion-button fill="clear" size="small" [routerLink]="['/procurements', procurement.id]">
+                    <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button 
+                    *ngIf="authService.hasRole(['admin', 'campus_manager', 'responsible_user'])"
+                    fill="clear" 
+                    size="small"
+                    (click)="openCommentModal(procurement)">
+                    <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button 
+                    *ngIf="authService.hasRole(['admin'])"
+                    fill="clear" 
+                    size="small"
+                    color="danger"
+                    (click)="deleteProcurement(procurement)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="procurements.length === 0">
+              <td colspan="10" class="text-center">No procurements found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div *ngIf="totalPages > 1" class="pagination">
+        <ion-button fill="clear" [disabled]="filters.page === 1" (click)="changePage(filters.page! - 1)">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-button>
+        
+        <div class="page-numbers">
+          <span *ngFor="let page of getPageNumbers()" 
+                [class.active]="page === filters.page"
+                (click)="typeof page === 'number' ? changePage(page) : null">
+            {{page}}
+          </span>
+        </div>
+        
+        <ion-button fill="clear" [disabled]="filters.page === totalPages" (click)="changePage(filters.page! + 1)">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assign User Modal -->
+  <ion-modal [isOpen]="showAssignModal" (willDismiss)="showAssignModal = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Assign Responsible User</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showAssignModal = false">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Select user for {{selectedProcurement?.proc_number}}</ion-label>
+          </ion-list-header>
+          <ion-radio-group (ionChange)="assignUser($event.detail.value)">
+            <ion-item *ngFor="let user of users">
+              <ion-label>
+                <h3>{{user.name}}</h3>
+                <p>{{user.email}} - {{user.business_unit}}</p>
+              </ion-label>
+              <ion-radio slot="start" [value]="user.id"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Add Comment Modal -->
+  <ion-modal [isOpen]="showCommentModal" (willDismiss)="showCommentModal = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Add Comment</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showCommentModal = false">Cancel</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="comment-container">
+          <ion-textarea
+            [(ngModel)]="commentText"
+            placeholder="Enter your comment here..."
+            rows="6"
+            auto-grow>
+          </ion-textarea>
+          <ion-button expand="block" (click)="addComment()" [disabled]="!commentText.trim()">
+            Submit Comment
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

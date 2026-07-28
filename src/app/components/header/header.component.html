@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <!-- Left Side - Menu Button -->
+    <ion-buttons slot="start">
+      <ion-button (click)="toggleSidebar()" class="menu-button">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <!-- Center - Navigation Links -->
+    <div class="nav-links-container">
+      <div class="nav-links">
+        <a [routerLink]="['/dashboard']" routerLinkActive="active" class="nav-link" (click)="closeMenuOnMobile()">
+          <ion-icon name="speedometer-outline"></ion-icon>
+          <span>Dashboard</span>
+        </a>
+        <a [routerLink]="['/procurements']" routerLinkActive="active" class="nav-link" (click)="closeMenuOnMobile()">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <span>Procurements</span>
+        </a>
+        <a *ngIf="authService.hasRole(['admin', 'campus_manager'])" [routerLink]="['/import-export']" routerLinkActive="active" class="nav-link" (click)="closeMenuOnMobile()">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+          <span>Procurements Entry</span>
+        </a>
+        <a [routerLink]="['/reports']" routerLinkActive="active" class="nav-link" (click)="closeMenuOnMobile()">
+          <ion-icon name="bar-chart-outline"></ion-icon>
+          <span>Reports</span>
+        </a>
+        <a *ngIf="authService.hasRole(['admin'])" [routerLink]="['/users']" routerLinkActive="active" class="nav-link" (click)="closeMenuOnMobile()">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Users</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Right Side - User Info & Logout -->
+    <ion-buttons slot="end">
+      <div class="user-info">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <span class="user-name">{{ getUserName() }}</span>
+      </div>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

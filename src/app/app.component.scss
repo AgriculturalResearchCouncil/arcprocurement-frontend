@@ -1,0 +1,237 @@
+.header-toolbar {
+  --background: linear-gradient(135deg, #005D28 0%, #007a35 100%);
+  --color: white;
+  --border-style: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 4px;
+  position: relative;
+  min-height: 56px;
+  --min-height: 56px;
+}
+
+// Centered logo container
+.centered-logo-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+// Simple logo wrapper with shadow
+.logo-wrapper-modern {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+  
+  @media (max-width: 576px) {
+    gap: 8px;
+  }
+}
+
+// Logo icon wrapper
+.logo-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+// Simple logo
+.arc-logo-modern {
+  height: 35px;
+  width: auto;
+  display: block;
+  
+  
+  @media (max-width: 768px) {
+    height: 28px;
+  }
+  
+  @media (max-width: 576px) {
+    height: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 20px;
+  }
+}
+
+// Text container
+.logo-text-modern {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  // text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+// Main text - plain white with shadow
+.logo-main-text {
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  color: white;
+  white-space: nowrap;
+  text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  
+  @media (max-width: 992px) {
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 576px) {
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+// Version text with shadow
+.logo-subtitle {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+
+// Hide the ion-title
+.header-title {
+  display: none;
+}
+
+// Button styles
+.menu-btn {
+  --color: white;
+  --color-hover: #EFB218;
+  position: relative;
+  z-index: 2;
+}
+
+.home-btn {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-link {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 24px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  position: relative;
+  z-index: 2;
+  
+  @media (max-width: 768px) {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    font-size: 0.85rem;
+  }
+}
+
+.logout-btn-header {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 24px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-weight: 500;
+  text-transform: none;
+  position: relative;
+  z-index: 2;
+}
+
+ion-toolbar {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --min-height: 56px;
+}
+
+ion-button {
+  --ripple-color: rgba(255, 255, 255, 0.3);
+}
+
+ion-menu-button {
+  color: white;
+  font-size: 24px;
+}
+
+ion-buttons {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+// Page content wrapper
+.page-content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Global styles for ion-content
+ion-content {
+  --padding-top: 56px;
+  
+  @media (min-width: 768px) {
+    --padding-top: 60px;
+  }
+}
+
+// Handle fullscreen mode
+ion-content[fullscreen] {
+  --padding-top: 0px;
+  
+  &::part(scroll) {
+    padding-top: 56px;
+    
+    @media (min-width: 768px) {
+      padding-top: 60px;
+    }
+  }
+}
+
+// iOS safe area support
+@supports (padding: max(0px)) {
+  ion-content {
+    --padding-top: max(56px, env(safe-area-inset-top));
+    
+    @media (min-width: 768px) {
+      --padding-top: max(60px, env(safe-area-inset-top));
+    }
+  }
+  
+  ion-content[fullscreen]::part(scroll) {
+    padding-top: max(56px, env(safe-area-inset-top));
+    
+    @media (min-width: 768px) {
+      padding-top: max(60px, env(safe-area-inset-top));
+    }
+  }
+}
+
+// Ensure footer doesn't overlap content
+app-footer {
+  margin-top: auto;
+}

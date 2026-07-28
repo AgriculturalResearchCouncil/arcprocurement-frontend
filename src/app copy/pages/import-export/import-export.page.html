@@ -1,0 +1,547 @@
+<ion-content>
+  <div class="import-export-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>&nbsp;</h1>
+        <p>Add procurements manually, bulk import from Excel, or export data</p>
+      </div>
+    </div>
+
+    <!-- Section 1: Manual Entry (Table Format) -->
+    <div class="manual-entry-section">
+      <div class="section-card">
+        <div class="section-header">
+          <ion-icon name="create-outline"></ion-icon>
+          <h2>Manual Entry</h2>
+          <span class="badge">Add Multiple Tenders</span>
+        </div>
+        <p class="section-description">
+          Enter tender details in the table below. Fields marked with <span class="required-star">*</span> are required.
+          Add multiple rows and submit all at once.
+        </p>
+
+        <!-- Table Wrapper with Horizontal Scroll -->
+        <div class="table-wrapper">
+          <div class="table-scroll">
+            <table class="tender-table">
+              <thead>
+                <tr>
+                  <th class="action-col">Action</th>
+                  <th>Procurement No. <span class="required-star">*</span></th>
+                  <th>Project Description <span class="required-star">*</span></th>
+                  <th>Programme</th>
+                  <th>Institute Name</th>
+                  <th>Est. Value (ZAR)</th>
+                  <th>Method of Procurement <span class="required-star">*</span></th>
+                  <th>Bid Specification</th>
+                  <th>Advert Date</th>
+                  <th>Bid Closing</th>
+                  <th>Bid Evaluation</th>
+                  <th>Bid Award</th>
+                  <th>Campus <span class="required-star">*</span></th>
+                  <th>Business Unit</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of tenderRows; let i = index" 
+                    [class.valid-row]="row.isValid"
+                    [class.invalid-row]="!row.isValid && hasPartialData(row)">
+                  
+                  <!-- Action Buttons with Tooltips -->
+                  <td class="action-col">
+                    <div class="action-buttons">
+                      <ion-button 
+                        fill="clear" 
+                        size="small" 
+                        (click)="removeRow(i)" 
+                        [disabled]="tenderRows.length === 1"
+                        class="remove-btn"
+                        attr.tooltip="Remove this row"
+                        tooltip-position="top">
+                        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                      </ion-button>
+                      <ion-button 
+                        fill="clear" 
+                        size="small" 
+                        (click)="duplicateRow(i)" 
+                        class="duplicate-btn"
+                        attr.tooltip="Duplicate this row"
+                        tooltip-position="top">
+                        <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </td>
+
+                  <!-- Procurement Number - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="row.proc_number" 
+                      (change)="validateRow(row)" 
+                      placeholder="PR-2024-001"
+                      class="native-input-cell"
+                      name="proc_number_{{row.id}}"
+                      attr.tooltip="Unique procurement identifier"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Project Description - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="row.project_description" 
+                      (change)="validateRow(row)"
+                      placeholder="Enter project description"
+                      class="native-input-cell"
+                      name="project_description_{{row.id}}"
+                      attr.tooltip="Detailed description of the project"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Programme - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="row.programme" 
+                      placeholder="Programme name"
+                      class="native-input-cell"
+                      name="programme_{{row.id}}"
+                      attr.tooltip="Associated programme name"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Institute Name - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="row.name_of_institute" 
+                      placeholder="Institute name"
+                      class="native-input-cell"
+                      name="institute_{{row.id}}"
+                      attr.tooltip="Name of the institute"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Estimated Value - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="number" 
+                      [(ngModel)]="row.estimated_value" 
+                      placeholder="0.00"
+                      class="native-input-cell"
+                      name="estimated_value_{{row.id}}"
+                      step="0.01"
+                      attr.tooltip="Estimated value in South African Rand (ZAR)"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Method of Procurement - Native Select with Tooltip -->
+                  <td>
+                    <select 
+                      [(ngModel)]="row.method_of_procurement" 
+                      (change)="validateRow(row)"
+                      class="native-select-cell"
+                      name="method_{{row.id}}"
+                      attr.tooltip="Select the procurement method"
+                      tooltip-position="top">
+                      <option value="">Select method</option>
+                      <option *ngFor="let method of procurementMethods" [value]="method">
+                        {{method}}
+                      </option>
+                    </select>
+                    </td>
+
+                  <!-- Bid Specification Date - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="date" 
+                      [(ngModel)]="row.bid_specification" 
+                      class="native-input-cell date-input"
+                      name="bid_spec_{{row.id}}"
+                      attr.tooltip="Date when bid specification was prepared"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Advert Date - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="date" 
+                      [(ngModel)]="row.advert" 
+                      class="native-input-cell date-input"
+                      name="advert_{{row.id}}"
+                      attr.tooltip="Date when advertisement was published"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Bid Closing Date - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="date" 
+                      [(ngModel)]="row.bid_closing" 
+                      class="native-input-cell date-input"
+                      name="bid_closing_{{row.id}}"
+                      attr.tooltip="Deadline for bid submissions"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Bid Evaluation Date - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="date" 
+                      [(ngModel)]="row.bid_evaluation" 
+                      class="native-input-cell date-input"
+                      name="bid_evaluation_{{row.id}}"
+                      attr.tooltip="Date when bids were evaluated"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Bid Award Date - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="date" 
+                      [(ngModel)]="row.bid_award" 
+                      class="native-input-cell date-input"
+                      name="bid_award_{{row.id}}"
+                      attr.tooltip="Date when contract was awarded"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Campus - Native Select with Tooltip -->
+                  <td>
+                    <select 
+                      [(ngModel)]="row.campus_id" 
+                      (change)="validateRow(row)"
+                      class="native-select-cell"
+                      name="campus_{{row.id}}"
+                      attr.tooltip="Select the campus"
+                      tooltip-position="top">
+                      <option [value]="null">Select campus</option>
+                      <option *ngFor="let campus of campuses" [value]="campus.id">
+                        {{campus.campus_name || campus.name}}
+                      </option>
+                    </select>
+                    </td>
+
+                  <!-- Business Unit - Native Input with Tooltip -->
+                  <td>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="row.business_unit" 
+                      placeholder="Business unit"
+                      class="native-input-cell"
+                      name="business_unit_{{row.id}}"
+                      attr.tooltip="Responsible business unit"
+                      tooltip-position="top">
+                    </td>
+
+                  <!-- Status Indicator with Tooltip -->
+                  <td class="status-col">
+                    <div class="row-status">
+                      <ion-icon 
+                        *ngIf="row.isValid" 
+                        name="checkmark-circle" 
+                        class="status-valid"
+                        attr.tooltip="Row is valid and ready to submit"
+                        tooltip-position="left"></ion-icon>
+                      <ion-icon 
+                        *ngIf="!row.isValid && hasPartialData(row)" 
+                        name="alert-circle"
+                        class="status-partial"
+                        attr.tooltip="Row has partial data - missing required fields"
+                        tooltip-position="left"></ion-icon>
+                      <ion-icon 
+                        *ngIf="!row.isValid && !hasPartialData(row)" 
+                        name="ellipse-outline"
+                        class="status-empty"
+                        attr.tooltip="Empty row - no data entered"
+                        tooltip-position="left"></ion-icon>
+                    </div>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Table Actions with Tooltips -->
+        <div class="table-actions">
+          <div class="action-left">
+            <ion-button 
+              fill="outline" 
+              size="small" 
+              (click)="addNewRow()" 
+              class="add-row-btn"
+              attr.tooltip="Add a new empty row"
+              tooltip-position="top">
+              <ion-icon slot="start" name="add-outline"></ion-icon>
+              Add Row
+            </ion-button>
+            <ion-button 
+              fill="outline" 
+              size="small" 
+              (click)="resetAllRows()" 
+              class="reset-btn"
+              attr.tooltip="Clear all rows and start over"
+              tooltip-position="top">
+              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+              Reset All
+            </ion-button>
+          </div>
+          <div class="action-right">
+            <div class="row-count-badge" attr.tooltip="Number of valid rows ready for submission" tooltip-position="top">
+              <span>{{getValidRowCount()}} of {{tenderRows.length}} rows ready</span>
+            </div>
+            <ion-button 
+              (click)="submitAllEntries()" 
+              [disabled]="!hasValidRows() || isSubmitting"
+              class="submit-all-btn"
+              attr.tooltip="Submit all valid rows"
+              tooltip-position="top">
+              <ion-icon slot="start" [name]="isSubmitting ? 'sync-outline' : 'save-outline'"></ion-icon>
+              {{isSubmitting ? 'Submitting...' : 'Submit All (' + getValidRowCount() + ')'}}
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Bulk Import and Export Side by Side -->
+    <div class="two-columns-layout">
+      <!-- Bulk Import Card -->
+      <div class="import-section">
+        <div class="section-card">
+          <div class="section-header">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <h2>Bulk Import</h2>
+            <span class="badge">Excel Upload</span>
+          </div>
+          <p class="section-description">
+            Upload an Excel file (.xlsx or .xls) to import multiple procurements at once.
+            <a (click)="downloadTemplate()" attr.tooltip="Download Excel template with correct format" tooltip-position="top">Download template</a> for the correct format.
+          </p>
+
+          <div class="file-upload-area" (click)="fileInput.click()" attr.tooltip="Click to select an Excel file" tooltip-position="top">
+            <input type="file" #fileInput id="file-input" accept=".xlsx,.xls" (change)="onFileSelected($event)" style="display: none">
+            <ion-icon name="document-outline"></ion-icon>
+            <p *ngIf="!selectedFile">Click or drag file to upload</p>
+            <p *ngIf="selectedFile" class="selected-file">{{selectedFile.name}}</p>
+            <small>Supported formats: .xlsx, .xls (Max 10MB)</small>
+          </div>
+
+          <ion-button 
+            expand="block" 
+            (click)="uploadFile()" 
+            [disabled]="!selectedFile || isUploading"
+            class="import-button"
+            attr.tooltip="Import the selected Excel file"
+            tooltip-position="top">
+            <ion-icon slot="start" [name]="isUploading ? 'sync-outline' : 'cloud-upload-outline'"></ion-icon>
+            {{isUploading ? 'Importing...' : 'Import Excel File'}}
+          </ion-button>
+
+          <!-- Import Results -->
+          <div *ngIf="importResult" class="import-results">
+            <div class="results-header">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              <h3>Import Results</h3>
+              <ion-button fill="clear" size="small" (click)="clearImportResult()" attr.tooltip="Clear results" tooltip-position="top">
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-button>
+            </div>
+            <div class="results-summary">
+              <div class="result-item total" attr.tooltip="Total records processed" tooltip-position="top">
+                <span>Total Records:</span>
+                <strong>{{importResult.total}}</strong>
+              </div>
+              <div class="result-item success" attr.tooltip="Successfully imported records" tooltip-position="top">
+                <span>Successful:</span>
+                <strong class="text-success">{{importResult.successful}}</strong>
+              </div>
+              <div class="result-item failed" attr.tooltip="Failed records" tooltip-position="top">
+                <span>Failed:</span>
+                <strong class="text-danger">{{importResult.failed}}</strong>
+              </div>
+            </div>
+            <div *ngIf="importResult.errors && importResult.errors.length > 0" class="errors-list">
+              <h4>Errors:</h4>
+              <div *ngFor="let error of importResult.errors" class="error-item">
+                <strong>Row {{error.row}}:</strong> {{error.error}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Card -->
+      <div class="export-section">
+        <div class="section-card">
+          <div class="section-header">
+            <ion-icon name="cloud-download-outline"></ion-icon>
+            <h2>Export Data</h2>
+            <span class="badge">Excel Export</span>
+          </div>
+
+          <div class="export-container">
+            <div class="export-filters-grid">
+              <div class="filter-field">
+                <ion-label class="filter-label">Campus</ion-label>
+                <ion-select 
+                  [(ngModel)]="exportFilters.campus_id" 
+                  placeholder="All Campuses" 
+                  interface="popover"
+                  class="filter-select"
+                  attr.tooltip="Filter by campus"
+                  tooltip-position="top">
+                  <ion-select-option [value]="undefined">All Campuses</ion-select-option>
+                  <ion-select-option *ngFor="let campus of campuses" [value]="campus.id">
+                    {{campus.campus_name || campus.name}}
+                  </ion-select-option>
+                </ion-select>
+              </div>
+
+              <div class="filter-field">
+                <ion-label class="filter-label">Status</ion-label>
+                <ion-select 
+                  [(ngModel)]="exportFilters.status" 
+                  placeholder="All Statuses" 
+                  interface="popover"
+                  class="filter-select"
+                  attr.tooltip="Filter by status"
+                  tooltip-position="top">
+                  <ion-select-option *ngFor="let option of statusOptions" [value]="option.value">
+                    {{option.label}}
+                  </ion-select-option>
+                </ion-select>
+              </div>
+
+              <div class="filter-field">
+                <ion-label class="filter-label">Date From</ion-label>
+                <ion-input 
+                  type="date" 
+                  [(ngModel)]="exportFilters.date_from" 
+                  placeholder="Select start date"
+                  class="filter-input"
+                  attr.tooltip="Start date for filtering"
+                  tooltip-position="top">
+                </ion-input>
+              </div>
+
+              <div class="filter-field">
+                <ion-label class="filter-label">Date To</ion-label>
+                <ion-input 
+                  type="date" 
+                  [(ngModel)]="exportFilters.date_to" 
+                  placeholder="Select end date"
+                  class="filter-input"
+                  attr.tooltip="End date for filtering"
+                  tooltip-position="top">
+                </ion-input>
+              </div>
+            </div>
+
+            <div class="export-actions">
+              <ion-button 
+                fill="outline" 
+                (click)="resetExportFilters()" 
+                class="reset-filter-btn"
+                attr.tooltip="Reset all export filters"
+                tooltip-position="top">
+                <ion-icon slot="start" name="refresh-outline"></ion-icon>
+                Reset Filters
+              </ion-button>
+              <ion-button 
+                (click)="exportData()" 
+                [disabled]="isExporting" 
+                class="export-btn"
+                attr.tooltip="Export data to Excel"
+                tooltip-position="top">
+                <ion-icon slot="start" [name]="isExporting ? 'sync-outline' : 'download-outline'"></ion-icon>
+                {{isExporting ? 'Exporting...' : 'Export to Excel'}}
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Import History -->
+    <div class="history-section">
+      <div class="section-card">
+        <div class="section-header">
+          <ion-icon name="time-outline"></ion-icon>
+          <h2>Import History</h2>
+          <span class="badge">Recent Imports</span>
+        </div>
+
+        <div *ngIf="isLoadingHistory" class="loading-container">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Loading history...</p>
+        </div>
+
+        <div *ngIf="!isLoadingHistory && importHistory.length === 0" class="no-data">
+          <ion-icon name="folder-open-outline"></ion-icon>
+          <p>No import history found</p>
+        </div>
+
+        <div *ngIf="!isLoadingHistory && importHistory.length > 0" class="history-table-container">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>File Name</th>
+                  <th>Uploaded By</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Successful</th>
+                  <th>Failed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of importHistory">
+                  <td [attr.tooltip]="item.file_name" tooltip-position="top">{{item.file_name}}</td>
+                  <td>{{item.uploaded_by_name}}</td>
+                  <td>{{formatDateTime(item.created_at)}}</td>
+                  <td>{{item.total_records}}</td>
+                  <td class="text-success">{{item.successful_records}}</td>
+                  <td class="text-danger">{{item.failed_records}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div *ngIf="historyTotalPages > 1" class="pagination">
+            <ion-button 
+              fill="clear" 
+              [disabled]="historyPage === 1" 
+              (click)="changeHistoryPage(historyPage - 1)"
+              attr.tooltip="Previous page"
+              tooltip-position="top">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </ion-button>
+
+            <div class="page-numbers">
+              <span *ngFor="let page of getPageNumbers()" 
+                    [class.active]="page === historyPage"
+                    (click)="typeof page === 'number' ? changeHistoryPage(page) : null"
+                    [attr.tooltip]="typeof page === 'number' ? 'Go to page ' + page : 'More pages'"
+                    tooltip-position="top">
+                {{page}}
+              </span>
+            </div>
+
+            <ion-button 
+              fill="clear" 
+              [disabled]="historyPage === historyTotalPages"
+              (click)="changeHistoryPage(historyPage + 1)"
+              attr.tooltip="Next page"
+              tooltip-position="top">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

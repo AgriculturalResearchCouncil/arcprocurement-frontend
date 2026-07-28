@@ -1,0 +1,138 @@
+.menu-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
+  text-align: center;
+  padding: 24px 16px;
+  background: #1a6e3e;
+  margin-bottom: 16px;
+  
+  .user-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    
+    ion-icon {
+      width: 50px;
+      height: 50px;
+      color: #ffffff;
+    }
+  }
+  
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  
+  p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #ffffff;
+    opacity: 0.9;
+    text-transform: capitalize;
+  }
+  
+  .user-email {
+    font-size: 10px;
+    opacity: 0.8;
+    word-break: break-all;
+    color: #ffffff;
+  }
+}
+
+.selected {
+  --background: #361414;
+  --color: #ffffff;
+  --background-focused: #361414;
+  --background-hover: #361414;
+  
+  ion-icon {
+    color: #ffffff !important;
+  }
+  
+  ion-label {
+    --color: #ffffff;
+    color: #ffffff !important;
+  }
+}
+
+.menu-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 8px 16px;
+}
+
+.logout-item {
+  margin-top: auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 48px;
+  --background-hover: rgba(54, 20, 20, 0.1);
+  --background-focused: rgba(54, 20, 20, 0.05);
+  cursor: pointer;
+  --color: #361414;
+}
+
+ion-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  color: #361414;
+}
+
+ion-label {
+  color: #361414;
+  font-weight: 500;
+}
+
+ion-item::part(native) {
+  background: transparent;
+}
+
+/* Menu title spacing - exactly 5px from left */
+.menu-title {
+  padding-left: 5px !important;
+  padding-inline-start: 5px !important;
+  margin-left: 0 !important;
+  --padding-start: 5px;
+}
+
+/* Ensure menu toggle buttons have proper spacing */
+ion-menu-toggle {
+  display: block;
+}
+
+/* Active/Hover states */
+ion-item:hover {
+  --background: rgba(54, 20, 20, 0.05);
+}
+
+ion-item.selected {
+  --background: #361414;
+  --color: #1a6e3e;
+  
+  ion-icon, 
+  ion-label {
+    color: #1a6e3e !important;
+  }
+}
+
+/* Fix for ion-toolbar padding */
+ion-toolbar {
+  --padding-start: 0;
+  --padding-end: 0;
+}

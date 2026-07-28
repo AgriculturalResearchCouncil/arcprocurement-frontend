@@ -34,4 +34,423 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+//@import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Global Application Styles */
+/* ============================================
+   FORCE LIGHT THEME - PREVENT DARK MODE
+   ============================================ */
+
+/* Force light theme on all elements */
+:root {
+  color-scheme: light !important;
+}
+
+/* Prevent dark mode on all inputs */
+input, 
+select, 
+textarea,
+.native-input-cell,
+.native-select-cell,
+.compact-input,
+.compact-select,
+.filter-input,
+.filter-select {
+  color-scheme: light !important;
+  background-color: white !important;
+  color: #2c3e50 !important;
+  border: 1px solid #e0e6ed !important;
+}
+
+/* Force light background on all form controls */
+input, 
+select, 
+textarea,
+ion-input,
+ion-select,
+ion-textarea,
+ion-datetime {
+  --background: white !important;
+  background: white !important;
+  background-color: white !important;
+  color: #2c3e50 !important;
+}
+
+/* Prevent dark mode on ion-items */
+ion-item {
+  --background: white !important;
+  background: white !important;
+}
+
+/* Prevent dark mode on ion-content */
+ion-content {
+  --background: #f5f7fb !important;
+  background: #f5f7fb !important;
+}
+
+/* Force light theme on modals */
+ion-modal {
+  --background: white !important;
+}
+
+/* Override any dark mode media queries */
+@media (prefers-color-scheme: dark) {
+  input, select, textarea,
+  .native-input-cell,
+  .native-select-cell {
+    background-color: white !important;
+    color: #2c3e50 !important;
+    border-color: #e0e6ed !important;
+  }
+  
+  ion-content {
+    --background: #f5f7fb !important;
+  }
+  
+  ion-item {
+    --background: white !important;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ion-content {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #2c3e50;
+  background-color: #f5f7fb;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.text-warning {
+  color: #ffc107;
+}
+
+.text-info {
+  color: #17a2b8;
+}
+
+/* Spacing Utilities */
+.m-0 { margin: 0; }
+.m-1 { margin: 4px; }
+.m-2 { margin: 8px; }
+.m-3 { margin: 12px; }
+.m-4 { margin: 16px; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: 4px; }
+.p-2 { padding: 8px; }
+.p-3 { padding: 12px; }
+.p-4 { padding: 16px; }
+
+/* Flex Utilities */
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-1 { gap: 4px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Card Hover Effects */
+.hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   FORCE INPUT RENDERING - PRODUCTION FIX
+   ============================================ */
+
+/* Force ion-input to render properly */
+ion-input {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  --background: white !important;
+  background: white !important;
+  border: 1px solid #e0e6ed !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  margin-top: 8px !important;
+}
+
+/* Force the native input inside ion-input to be visible */
+ion-input .native-input {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  color: #2c3e50 !important;
+  font-size: 16px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Force input wrapper to be visible */
+ion-input .input-wrapper {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Ensure the inner input element exists and is visible */
+ion-input input {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: white !important;
+  color: #2c3e50 !important;
+  width: 100% !important;
+  border: none !important;
+  outline: none !important;
+  padding: 12px !important;
+  font-size: 16px !important;
+}
+
+/* ==================== GLOBAL TOOLTIP STYLES ==================== */
+/* These need to be global to work around Ionic's view encapsulation */
+
+[tooltip] {
+  position: relative;
+}
+
+[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 100000;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+[tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* Position variations */
+[tooltip][tooltip-position="bottom"]::after {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+[tooltip][tooltip-position="left"]::after {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+
+[tooltip][tooltip-position="right"]::after {
+  bottom: auto;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-left: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  [tooltip]::after {
+    font-size: 10px;
+    padding: 4px 8px;
+    white-space: normal;
+    max-width: 150px;
+    text-align: center;
+  }
+}
+
+/* For Ionic buttons - override their default styling */
+ion-button[tooltip] {
+  position: relative;
+}
+
+ion-button[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 100000;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+ion-button[tooltip]:hover::after {
+  opacity: 1;
+}
+
+ion-button[tooltip][tooltip-position="bottom"]::after {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+ion-button[tooltip][tooltip-position="left"]::after {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+
+ion-button[tooltip][tooltip-position="right"]::after {
+  bottom: auto;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-left: 8px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 576px) {
+  .hide-xs {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .hide-md {
+    display: none;
+  }
+}

@@ -1,2 +1,136 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+/* Core CSS required for Ionic components to work properly */
+@import '@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+
+/* Optional CSS utils */
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
+
+/* ============================================
+   ARC BRAND COLOURS
+   ============================================ */
+:root {
+  /* Primary ARC Colours */
+  --arc-green: #005D28;
+  --arc-gold: #EFB218;
+  --arc-earth-brown: #884616;
+  --arc-dark-brown: #361414;
+  --arc-navy: #002395;
+  --arc-black: #000000;
+  --arc-white: #FFFFFF;
+  
+  /* Gradient Combinations */
+  --arc-gradient-green-gold: linear-gradient(135deg, var(--arc-green) 0%, var(--arc-gold) 100%);
+  --arc-gradient-brown-navy: linear-gradient(135deg, var(--arc-earth-brown) 0%, var(--arc-navy) 100%);
+  
+  /* Ionic Theme Overrides */
+  --ion-color-primary: var(--arc-green);
+  --ion-color-primary-rgb: 0, 93, 40;
+  --ion-color-primary-contrast: var(--arc-white);
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #005224;
+  --ion-color-primary-tint: #1a6e3e;
+  
+  --ion-color-secondary: var(--arc-gold);
+  --ion-color-secondary-rgb: 239, 178, 24;
+  --ion-color-secondary-contrast: var(--arc-dark-brown);
+  --ion-color-secondary-contrast-rgb: 54, 20, 20;
+  --ion-color-secondary-shade: #d29d15;
+  --ion-color-secondary-tint: #f1bf30;
+  
+  --ion-color-tertiary: var(--arc-navy);
+  --ion-color-tertiary-rgb: 0, 35, 149;
+  --ion-color-tertiary-contrast: var(--arc-white);
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #001f83;
+  --ion-color-tertiary-tint: #1a39a0;
+  
+  --ion-color-success: var(--arc-green);
+  --ion-color-success-rgb: 0, 93, 40;
+  --ion-color-success-contrast: var(--arc-white);
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #005224;
+  --ion-color-success-tint: #1a6e3e;
+  
+  --ion-color-warning: var(--arc-gold);
+  --ion-color-warning-rgb: 239, 178, 24;
+  --ion-color-warning-contrast: var(--arc-dark-brown);
+  --ion-color-warning-contrast-rgb: 54, 20, 20;
+  --ion-color-warning-shade: #d29d15;
+  --ion-color-warning-tint: #f1bf30;
+  
+  --ion-color-danger: #dc3545;
+  --ion-color-danger-rgb: 220, 53, 69;
+  --ion-color-danger-contrast: var(--arc-white);
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #c22f3d;
+  --ion-color-danger-tint: #e04958;
+  
+  --ion-color-dark: var(--arc-dark-brown);
+  --ion-color-dark-rgb: 54, 20, 20;
+  --ion-color-dark-contrast: var(--arc-white);
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #2e1212;
+  --ion-color-dark-tint: #482b2b;
+  
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: var(--arc-white);
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+  
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: var(--arc-black);
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+}
+
+/* Global Body Styling */
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: var(--arc-dark-brown);
+}
+
+/* ARC Brand Utility Classes */
+.bg-arc-green { background-color: var(--arc-green); }
+.bg-arc-gold { background-color: var(--arc-gold); }
+.bg-arc-earth-brown { background-color: var(--arc-earth-brown); }
+.bg-arc-navy { background-color: var(--arc-navy); }
+
+.text-arc-green { color: var(--arc-green); }
+.text-arc-gold { color: var(--arc-gold); }
+.text-arc-earth-brown { color: var(--arc-earth-brown); }
+.text-arc-navy { color: var(--arc-navy); }
+.text-arc-dark-brown { color: var(--arc-dark-brown); }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--arc-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004a20;
+}

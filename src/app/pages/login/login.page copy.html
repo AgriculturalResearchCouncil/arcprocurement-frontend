@@ -1,0 +1,73 @@
+<ion-content class="login-container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand-section">
+        <div class="logo-container">
+          <div class="arc-logo"></div>
+        </div>
+        <h1>ARC Procurement Tracking System</h1>
+      </div>
+      
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="input-group">
+          <label class="input-label">Username</label>
+          <input 
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            required
+            class="native-input-field"
+            placeholder="Enter your username"
+            autocomplete="off">
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input 
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            class="native-input-field"
+            placeholder="Enter your password"
+            autocomplete="off">
+        </div>
+        
+        <div *ngIf="errorMessage" class="error-message">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+        
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="isLoading"
+          class="login-button">
+          <ion-icon slot="start" name="log-in-outline"></ion-icon>
+          {{ isLoading ? 'Authenticating...' : 'Login' }}
+        </ion-button>
+      </form>
+      
+      <div class="demo-section">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            <h3>ARC Domain Login</h3>
+            <p class="login-instruction">Use your ARC Active Directory credentials to log in</p>
+<!--             
+            <div class="demo-info">
+              <p><strong>Username:</strong> ARC network username (e.g., NcubeZ)</p>
+              <p><strong>Password:</strong> ARC network password</p>
+            </div> -->
+            
+            <!-- <ion-item lines="none" class="info-item">
+              <ion-icon name="information-circle-outline" slot="start" color="medium"></ion-icon>
+              <ion-label class="ion-text-wrap">
+                <small>This system uses your existing ARC domain credentials. No separate registration required.</small>
+              </ion-label>
+            </ion-item> -->
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>

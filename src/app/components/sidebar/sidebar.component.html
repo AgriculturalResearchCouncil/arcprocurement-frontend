@@ -1,0 +1,39 @@
+<ion-menu contentId="main-content" menuId="main-menu" type="overlay" side="start">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>ARC Procurement Tracker</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()" fill="clear">
+          <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list class="menu-list">
+      <div class="user-info" *ngIf="getUser()">
+        <ion-avatar class="user-avatar">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ion-avatar>
+        <h3>{{ getUser()?.name }}</h3>
+        <p>{{ getUser()?.role | titlecase }}</p>
+        <p class="user-email">{{ getUser()?.email }}</p>
+      </div>
+      
+      <ion-menu-toggle auto-hide="false" *ngFor="let item of filteredMenuItems">
+        <ion-item [routerLink]="item.path" routerLinkActive="selected" [detail]="false" lines="full" (click)="closeMenu()">
+          <ion-icon [name]="item.icon" slot="start"></ion-icon>
+          <ion-label>{{ item.title }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      
+      <div class="menu-divider"></div>
+      
+      <ion-item (click)="logout()" button detail="false" lines="full" class="logout-item">
+        <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+        <ion-label color="danger">Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

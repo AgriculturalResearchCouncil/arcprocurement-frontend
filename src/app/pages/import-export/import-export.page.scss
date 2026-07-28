@@ -1,0 +1,728 @@
+.import-export-container {
+  padding: 20px;
+  min-height: calc(100vh - 120px);
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.page-header p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Section Cards */
+.section-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+.section-header ion-icon {
+  font-size: 28px;
+  color: #3498db;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.section-header .badge {
+  background: #e9ecef;
+  color: #495057;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.section-description {
+  color: #6c757d;
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.required-star {
+  color: #dc3545;
+  margin-left: 2px;
+}
+
+/* Table Wrapper - Horizontal Scroll */
+.table-wrapper {
+  position: relative;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.tender-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 1400px;
+}
+
+.tender-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tender-table th {
+  background: #f8f9fa;
+  padding: 12px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #e0e6ed;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.tender-table td {
+  padding: 8px;
+  border-bottom: 1px solid #e0e6ed;
+  vertical-align: middle;
+  background: white;
+}
+
+.tender-table tbody tr:hover td {
+  background: #f8f9fa;
+}
+
+.tender-table tbody tr.valid-row td {
+  background: rgba(40, 167, 69, 0.05);
+}
+
+.tender-table tbody tr.invalid-row td {
+  background: rgba(220, 53, 69, 0.02);
+}
+
+/* Column Widths */
+.tender-table th.action-col,
+.tender-table td.action-col {
+  width: 80px;
+  text-align: center;
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 5;
+}
+
+.tender-table tbody tr:hover td.action-col {
+  background: #f8f9fa;
+}
+
+.tender-table th.status-col,
+.tender-table td.status-col {
+  width: 70px;
+  text-align: center;
+}
+
+/* Input Styles */
+.native-input-cell {
+  width: 100%;
+  min-width: 120px;
+  padding: 8px;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  background: white;
+  color: #2c3e50;
+  box-sizing: border-box;
+}
+
+.native-input-cell:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.native-select-cell {
+  width: 100%;
+  min-width: 130px;
+  padding: 8px;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  background: white;
+  color: #2c3e50;
+  cursor: pointer;
+}
+
+.native-select-cell:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.date-input {
+  min-width: 130px;
+}
+
+.tender-table td {
+  padding: 8px;
+  vertical-align: middle;
+  background: white;
+}
+
+.tender-table input,
+.tender-table select {
+  width: 100%;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.remove-btn {
+  --color: #dc3545;
+  margin: 0;
+  height: 32px;
+}
+
+.duplicate-btn {
+  --color: #3498db;
+  margin: 0;
+  height: 32px;
+}
+
+/* Row Status Icons */
+.row-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-valid {
+  color: #28a745;
+  font-size: 20px;
+}
+
+.status-partial {
+  color: #ffc107;
+  font-size: 20px;
+}
+
+.status-empty {
+  color: #cbd5e0;
+  font-size: 20px;
+}
+
+/* Table Actions */
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e6ed;
+}
+
+.action-left {
+  display: flex;
+  gap: 12px;
+}
+
+.action-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.row-count-badge {
+  background: #e9ecef;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #495057;
+}
+
+.add-row-btn {
+  --border-color: #28a745;
+  --color: #28a745;
+}
+
+.reset-btn {
+  --border-color: #dc3545;
+  --color: #dc3545;
+}
+
+.submit-all-btn {
+  --background: #005D28;
+  --background-hover: #218838;
+}
+
+/* Two Columns Layout */
+.two-columns-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* File Upload */
+.file-upload-area {
+  border: 2px dashed #cbd5e0;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.file-upload-area:hover {
+  border-color: #3498db;
+  background: #f8f9fa;
+}
+
+.file-upload-area ion-icon {
+  font-size: 40px;
+  color: #a0aec0;
+  margin-bottom: 12px;
+}
+
+.selected-file {
+  color: #3498db !important;
+  font-weight: 500;
+}
+
+.import-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.template-btn {
+  --border-color: #6c757d;
+  --color: #6c757d;
+}
+
+.import-btn {
+  --background: #28a745;
+  --background-hover: #218838;
+}
+
+/* Import Results */
+.import-results {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e6ed;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.results-header ion-icon {
+  font-size: 20px;
+  color: #28a745;
+}
+
+.results-header h3 {
+  margin: 0;
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.results-summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.result-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.error-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.error-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #dc3545;
+  border-bottom: 1px solid #fecaca;
+}
+
+.error-item:last-child {
+  border-bottom: none;
+}
+
+/* Export Filters Grid */
+.export-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.filter-select,
+.filter-input {
+  --border-radius: 8px;
+  --border-color: #e0e6ed;
+}
+
+.export-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.reset-filter-btn {
+  --border-color: #6c757d;
+  --color: #6c757d;
+}
+
+.export-btn {
+  --background: #005D28;
+  --background-hover: #218838;
+}
+
+/* History Table */
+.history-table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 12px;
+  background: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Loading & Empty States */
+.loading-container,
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 12px;
+  color: #6c757d;
+}
+
+.no-data ion-icon {
+  font-size: 48px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid #e0e6ed;
+  margin-top: 16px;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 4px;
+}
+
+.page-numbers span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.page-numbers span:hover {
+  background: #e9ecef;
+}
+
+.page-numbers span.active {
+  background: #3498db;
+  color: white;
+}
+
+/* ==================== TOOLTIP STYLES ==================== */
+/* Direct tooltip on buttons - works with Ionic 7 */
+ion-button[tooltip] {
+  position: relative;
+}
+
+ion-button[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10000;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+ion-button[tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* Tooltip on divs and spans */
+div[tooltip], span[tooltip], .file-upload-area[tooltip] {
+  position: relative;
+}
+
+div[tooltip]::after, 
+span[tooltip]::after, 
+.file-upload-area[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10000;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+div[tooltip]:hover::after, 
+span[tooltip]:hover::after, 
+.file-upload-area[tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* Tooltip on native inputs and selects */
+input[tooltip], select[tooltip] {
+  position: relative;
+}
+
+input[tooltip]::after, select[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10000;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+input[tooltip]:hover::after, select[tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* Position variations */
+ion-button[tooltip][tooltip-position="bottom"]::after,
+div[tooltip][tooltip-position="bottom"]::after,
+span[tooltip][tooltip-position="bottom"]::after,
+input[tooltip][tooltip-position="bottom"]::after,
+select[tooltip][tooltip-position="bottom"]::after {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+ion-button[tooltip][tooltip-position="left"]::after,
+div[tooltip][tooltip-position="left"]::after,
+span[tooltip][tooltip-position="left"]::after,
+input[tooltip][tooltip-position="left"]::after,
+select[tooltip][tooltip-position="left"]::after {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+
+ion-button[tooltip][tooltip-position="right"]::after,
+div[tooltip][tooltip-position="right"]::after,
+span[tooltip][tooltip-position="right"]::after,
+input[tooltip][tooltip-position="right"]::after,
+select[tooltip][tooltip-position="right"]::after {
+  bottom: auto;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-bottom: 0;
+  margin-left: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  [tooltip]::after {
+    font-size: 10px;
+    padding: 4px 8px;
+    white-space: normal;
+    max-width: 150px;
+    text-align: center;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .two-columns-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .export-filters-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .export-actions {
+    flex-direction: column;
+  }
+  
+  .export-actions ion-button {
+    width: 100%;
+  }
+  
+  .table-actions {
+    flex-direction: column;
+  }
+  
+  .action-left,
+  .action-right {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .data-table {
+    font-size: 11px;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 8px;
+  }
+  
+  [tooltip]:before {
+    font-size: 10px;
+    padding: 4px 8px;
+    white-space: normal;
+    max-width: 150px;
+    text-align: center;
+  }
+}

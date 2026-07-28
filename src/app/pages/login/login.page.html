@@ -1,0 +1,102 @@
+<!-- frontend/src/app/pages/login/login.page.html -->
+<ion-content class="login-container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand-section">
+        <div class="logo-container">
+          <div class="arc-logo"></div>
+        </div>
+        <h1>ARC Procurement Tracking System</h1>
+      </div>
+      
+      <!-- Enhanced Error Display -->
+      <div *ngIf="errorMessage" class="error-container" [ngClass]="getErrorClass()">
+        <div class="error-header">
+          <ion-icon [name]="getErrorIcon()" class="error-icon"></ion-icon>
+          <span class="error-title">
+            {{ errorCode === 'PASSWORD_EXPIRED' ? 'Password Expired' : 
+               errorCode === 'ACCOUNT_LOCKED' ? 'Account Locked' :
+               errorCode === 'SERVICE_UNAVAILABLE' ? 'Service Unavailable' :
+               errorCode === 'TIMEOUT' ? 'Request Timeout' :
+               errorCode === 'ACCOUNT_DISABLED' ? 'Account Disabled' :
+               errorCode === 'ACCOUNT_EXPIRED' ? 'Account Expired' :
+               'Authentication Failed' }}
+          </span>
+          <button type="button" class="close-error" (click)="clearError()">×</button>
+        </div>
+        <div class="error-message">{{ errorMessage }}</div>
+        
+        <!-- Additional actions based on error type -->
+        <div class="error-actions" *ngIf="errorCode === 'PASSWORD_EXPIRED' || errorCode === 'ACCOUNT_LOCKED'">
+          <button class="error-action-btn" (click)="contactSupport()">
+            <ion-icon name="mail-outline"></ion-icon>
+            Contact IT Support
+          </button>
+        </div>
+        
+        <div class="error-help" *ngIf="errorCode === 'INVALID_CREDENTIALS' && remainingAttempts > 0">
+          <small>{{ remainingAttempts }} attempt{{ remainingAttempts !== 1 ? 's' : '' }} remaining</small>
+        </div>
+        
+        <div class="error-help" *ngIf="errorCode === 'SERVICE_UNAVAILABLE'">
+          <small>Please try again in a few minutes</small>
+        </div>
+      </div>
+      
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="input-group">
+          <label class="input-label">
+            <ion-icon name="person-outline"></ion-icon>
+            Username
+          </label>
+          <input 
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            required
+            class="native-input-field"
+            placeholder="Enter your ARC network username"
+            autocomplete="off"
+            [class.error]="errorCode === 'INVALID_CREDENTIALS'">
+          <small class="input-hint">Use your ARC domain username (e.g., NcubeZ)</small>
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            Password
+          </label>
+          <input 
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            class="native-input-field"
+            placeholder="Enter your ARC network password"
+            autocomplete="off"
+            [class.error]="errorCode === 'INVALID_CREDENTIALS'">
+        </div>
+        
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="isLoading"
+          class="login-button">
+          <ion-icon slot="start" [name]="isLoading ? 'sync-outline' : 'log-in-outline'"></ion-icon>
+          {{ isLoading ? 'Authenticating...' : 'Login' }}
+        </ion-button>
+      </form>
+      
+      <div class="info-section">
+        <div class="info-item">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>Use your ARC Active Directory credentials to log in</span>
+        </div>
+        <div class="info-item" *ngIf="errorCode === 'ACCOUNT_LOCKED'">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>IT Support: (012) 427-9700</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

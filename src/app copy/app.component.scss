@@ -1,0 +1,58 @@
+.header-toolbar {
+  --background: linear-gradient(135deg, #005D28 0%, #007a35 100%);
+  --color: white;
+  --border-style: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 4px;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.menu-btn {
+  --color: white;
+  --color-hover: #EFB218;
+}
+
+.home-btn {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 50%;
+}
+
+.nav-link {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 24px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.3px;
+}
+
+.logout-btn-header {
+  --color: white;
+  --color-hover: #EFB218;
+  --border-radius: 24px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+ion-button {
+  --ripple-color: rgba(255, 255, 255, 0.3);
+}
+
+ion-menu-button {
+  color: white;
+  font-size: 24px;
+}

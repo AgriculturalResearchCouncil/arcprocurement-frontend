@@ -1,0 +1,32 @@
+.app-footer {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ion-color-medium);
+  padding: 0 16px;
+}
+
+.separator {
+  margin: 0 8px;
+  color: var(--ion-color-light-shade);
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 8px 0;
+  }
+  
+  .separator {
+    display: none;
+  }
+}

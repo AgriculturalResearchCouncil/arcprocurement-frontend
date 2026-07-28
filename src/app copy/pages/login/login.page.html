@@ -1,0 +1,78 @@
+<ion-content class="login-container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand-section">
+        <div class="logo-container">
+          <div class="arc-logo"></div>
+        </div>
+        <h1>ARC Procurement Tracking System</h1>
+      </div>
+      
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="input-group">
+          <label class="input-label">Email Address</label>
+          <input 
+            type="email"
+            #emailInput
+            [(ngModel)]="username"
+            name="username"
+            required
+            class="native-input-field"
+            placeholder="Enter your email"
+            autocomplete="off">
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input 
+            type="password"
+            #passwordInput
+            [(ngModel)]="password"
+            name="password"
+            required
+            class="native-input-field"
+            placeholder="Enter your password"
+            autocomplete="off">
+        </div>
+        
+        <div *ngIf="errorMessage" class="error-message">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+        
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="isLoading"
+          class="login-button">
+          <ion-icon slot="start" name="log-in-outline"></ion-icon>
+          {{ isLoading ? 'Authenticating...' : 'Login' }}
+        </ion-button>
+      </form>
+      
+      <div class="demo-section">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            <h3>Demo Credentials</h3>
+            <div class="demo-buttons">
+              <ion-button size="small" fill="outline" (click)="fillDemoCredentials('admin')">
+                Admin
+              </ion-button>
+              <ion-button size="small" fill="outline" (click)="fillDemoCredentials('manager')">
+                Manager
+              </ion-button>
+              <ion-button size="small" fill="outline" (click)="fillDemoCredentials('user')">
+                User
+              </ion-button>
+            </div>
+            <div class="demo-info">
+              <p><strong>Admin:</strong> ncubez@arc.agric.za / Admin123</p>
+              <p><strong>Manager:</strong> arc.agricloud@gmail.com / Manager123</p>
+              <p><strong>User:</strong> ncubez@arc.agric.za / User123</p>
+            </div>
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>

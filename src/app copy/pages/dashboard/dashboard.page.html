@@ -1,0 +1,153 @@
+<ion-content>
+  <div class="dashboard-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>&nbsp;</h1>
+        <p>Welcome back, {{authService.getCurrentUser()?.name}}</p>
+      </div>
+      <ion-button (click)="refresh()" [disabled]="isLoading">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+        Refresh
+      </ion-button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading dashboard data...</p>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div *ngIf="!isLoading && summary">
+      <!-- Summary Cards -->
+      <div class="summary-grid">
+        <div class="summary-card total">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <div class="card-title">Total Procurements</div>
+            <div class="card-value">{{summary.total_procurements}}</div>
+          </div>
+        </div>
+        <div class="summary-card pending">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <div class="card-title">Pending</div>
+            <div class="card-value pending">{{summary.pending_count}}</div>
+          </div>
+        </div>
+        <div class="summary-card progress">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <div class="card-title">In Progress</div>
+            <div class="card-value in-progress">{{summary.in_progress_count}}</div>
+          </div>
+        </div>
+        <div class="summary-card completed">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <div class="card-title">Completed</div>
+            <div class="card-value completed">{{summary.completed_count}}</div>
+          </div>
+        </div>
+        <div class="summary-card overdue">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <div class="card-title">Overdue</div>
+            <div class="card-value overdue">{{summary.overdue_count}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <div class="chart-card">
+          <h3>Status Distribution</h3>
+          <canvas id="statusChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Procurements by Campus</h3>
+          <canvas id="campusChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Recent Procurements -->
+      <div class="recent-section">
+        <h3>Recent Procurements</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Campus</th>
+                <th>Status</th>
+                <th>Closing Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let procurement of summary.recent_procurements">
+                <td><strong>{{procurement.proc_number}}</strong></td>
+                <td>{{procurement.project_description | slice:0:60}}..</td>
+                <td>{{procurement.campus_name}}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="getStatusClass(procurement.overall_status)">
+                    {{procurement.overall_status | titlecase}}
+                  </span>
+                </td>
+                <td>{{formatDate(procurement.bid_closing)}}</td>
+                <td>
+                  <ion-button fill="clear" size="small" [routerLink]="['/procurements', procurement.id]">
+                    View
+                  </ion-button>
+                </td>
+              </tr>
+              <tr *ngIf="summary.recent_procurements.length === 0">
+                <td colspan="6" class="text-center">No procurements found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Overdue Procurements Alert -->
+      <div class="overdue-section" *ngIf="overdueProcurements.length > 0">
+        <h3 class="overdue-title">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          Overdue Procurements ({{overdueProcurements.length}})
+        </h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Campus</th>
+                <th>Responsible</th>
+                <th>Closing Date</th>
+                <th>Days Overdue</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let procurement of overdueProcurements">
+                <td><strong>{{procurement.proc_number}}</strong></td>
+                <td>{{procurement.project_description | slice:0:50}}..</td>
+                <td>{{procurement.campus_name}}</td>
+                <td>{{procurement.responsible_user_name || 'Unassigned'}}</td>
+                <td class="text-danger">{{formatDate(procurement.bid_closing)}}</td>
+                <td class="text-danger">{{getDaysOverdue(procurement.bid_closing)}} days</td>
+                <td>
+                  <ion-button fill="clear" size="small" [routerLink]="['/procurements', procurement.id]">
+                    View
+                  </ion-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
